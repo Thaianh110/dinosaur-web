@@ -1,17 +1,19 @@
 const express = require("express");
+const dbConnect = require("./config/dbconnect"); 
+const routes = require("./routes");
 
-require('dotenv').config()
+const dotenv = require('dotenv')
+dotenv.config()
+
 
 const app = express();
-
 const port = process.env.PORT || 8888
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/', (req,res) => {
-    res.send("SERVER connect");
-})
+dbConnect();
+routes(app);
 
 app.listen(port , ()=> {
     console.log('server running in port: ' + port);
